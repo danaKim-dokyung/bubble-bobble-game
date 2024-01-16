@@ -3,6 +3,11 @@ package bubble;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Player extends JLabel implements Moveable {
 
 	// 버블이 위치
@@ -11,10 +16,10 @@ public class Player extends JLabel implements Moveable {
 
 	
 	//버블이 상태
-	private boolean isLeft; 
-	private boolean isRight; 
-	private boolean isUp; 
-	private boolean isDown; 
+	private boolean left; 
+	private boolean right; 
+	private boolean up; 
+	private boolean down; 
 
 	
 	private ImageIcon playerR, playerL;
@@ -35,10 +40,10 @@ public class Player extends JLabel implements Moveable {
 		x = 55;
 		y = 535;
 
-		isLeft = false; 
-		isRight = false; 
-		isUp = false; 
-		isDown = false; 
+		left = false; 
+		right = false; 
+		up = false; 
+		down = false; 
 
 		
 		
@@ -50,16 +55,40 @@ public class Player extends JLabel implements Moveable {
 
 	@Override
 	public void left() {
-		setIcon(playerL); 
-		x = x-10; 
-		setLocation(x,y);
+		left = true; 
+		new Thread(()-> {
+			while(left) {
+				setIcon(playerL); 
+				x = x-1; 
+				setLocation(x,y);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		
+
 	}
 
 	@Override
 	public void right() {
-		setIcon(playerR); 
-		x = x+10; 
-		setLocation(x,y);
+		right = true;
+		new Thread(()-> {
+			while(right) {
+				setIcon(playerR); 
+				x = x+1; 
+				setLocation(x,y);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+
+
 	}
 
 	@Override

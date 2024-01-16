@@ -42,17 +42,21 @@ public class BubbleFrame extends JFrame{
 	
 	private void initListener() {
 		addKeyListener(new KeyAdapter() {
+			
+			//keyboard click
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println(e.getKeyCode());
 				
 				switch(e.getKeyCode()) {
 				case KeyEvent.VK_LEFT:
-					player.left();
+					if(!player.isLeft()) {						
+						player.left();
+					}
 					break; 
 				case KeyEvent.VK_RIGHT:
-					player.right();
-
+					if(!player.isRight()) {						
+						player.right();
+					}
 					break; 
 				case KeyEvent.VK_UP:
 					player.up();
@@ -62,6 +66,22 @@ public class BubbleFrame extends JFrame{
 				}
 			
 			}
+			
+			//keyboard release 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_LEFT:
+					player.setLeft(false);
+				break; 
+				case KeyEvent.VK_RIGHT:
+					player.setRight(false);
+				break; 
+				}
+				
+			}
+
+			
 		});
 	}
 	
