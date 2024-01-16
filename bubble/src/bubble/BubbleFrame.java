@@ -3,22 +3,33 @@ package bubble;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
+
+import lombok.Getter;
+
 public class BubbleFrame extends JFrame{
 	
 	private JLabel backgroundMap; 
+	private Player player; 
 	
 	public BubbleFrame() {
 		initObject();
 		initSetting(); 
 		setVisible(true);
-		
+		initListener(); 
 	}
 	
 	private void initObject() {
 		backgroundMap = new JLabel(new ImageIcon("image/backgroundMap.png"));
-		backgroundMap.setSize(100,100);
-		backgroundMap.setLocation(300,300);
-		add(backgroundMap); 
+		
+		setContentPane(backgroundMap);
+		
+		player = new Player() ; 
+		add(player);
+
 	}
 	
 	private void initSetting() {
@@ -27,6 +38,31 @@ public class BubbleFrame extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	}
+	
+	private void initListener() {
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println(e.getKeyCode());
+				
+				switch(e.getKeyCode()) {
+				case KeyEvent.VK_LEFT:
+					player.left();
+					break; 
+				case KeyEvent.VK_RIGHT:
+					player.right();
+
+					break; 
+				case KeyEvent.VK_UP:
+					player.up();
+
+					break; 
+				
+				}
+			
+			}
+		});
 	}
 	
 	public static void main(String[] args) {
